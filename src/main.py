@@ -8,6 +8,10 @@ from catalogue_utils import validate_catalogue
 from dotenv import load_dotenv
 from google import genai
 
+def reset_app():
+    st.session_state.basket = []
+    st.session_state.basket_product = None
+
 # Load the secret API key
 load_dotenv()
 
@@ -265,6 +269,10 @@ else:
 
 st.subheader("Build Your Shopping Basket")
 
+if st.button("Reset / Start Over"):
+    reset_app()
+    st.rerun()
+
 # Create a basket that remembers items during the session
 if "basket" not in st.session_state:
     st.session_state.basket = []
@@ -277,17 +285,22 @@ selected_item = st.selectbox(
 )
 
 # Retrieve the selected product details
-item_details = products[
+matching_products = products[
     products["name"] == selected_item
-].iloc[0]
+]
 
-available_stock = int(item_details["stock_qty"])
-item_price = float(item_details["price_ghs"])
+if not matching_products.empty:
+    item_details = matching_products.iloc[0]
 
-# Show product information
-st.write(f"**Price:** GH¢{item_price:,.2f}")
-st.write(f"**Available stock:** {available_stock}")
+    available_stock = int(item_details["stock_qty"])
+    item_price = float(item_details["price_ghs"])
 
+    # Show product information
+    st.write(f"**Price:** GH¢{item_price:,.2f}")
+    st.write(f"**Available stock:** {available_stock}")
+
+else:
+    st.warning("Please select a valid product.")
 # Ask for quantity
 quantity = st.number_input(
     "Enter quantity",
