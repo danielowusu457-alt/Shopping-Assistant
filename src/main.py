@@ -24,7 +24,75 @@ catalogue_path = (
 )
 
 # Load the product catalogue
-products = pd.read_csv(catalogue_path, sep="\t")
+@st.cache_data
+def load_catalogue(file_path, file_modified_time):
+    return pd.read_csv(file_path, sep="\t")
+
+
+# Load and validate the product catalogue
+try:
+    products = load_catalogue(
+    str(catalogue_path),
+    catalogue_path.stat().st_mtime
+)
+
+except FileNotFoundError:
+    st.error("Product catalogue file could not be found.")
+    st.stop()
+
+except pd.errors.ParserError:
+    st.error("There is a problem with the product catalogue format.")
+    st.stop()
+
+# Check that all required columns exist
+required_columns = [
+    "product_id",
+    "name",
+    "category",
+    "description",
+    "price_ghs",
+    "stock_qty"
+]
+
+missing_columns = [
+    column for column in required_columns
+    if column not in products.columns
+]
+
+if missing_columns:
+    st.error(
+        f"Missing required catalogue columns: {', '.join(missing_columns)}"
+    )
+    st.stop()
+
+# Check that the catalogue is not empty
+if products.empty:
+    st.error("The product catalogue is empty.")
+    st.stop()
+
+# Convert price and stock columns into numbers
+products["price_ghs"] = pd.to_numeric(
+    products["price_ghs"], errors="coerce"
+)
+
+products["stock_qty"] = pd.to_numeric(
+    products["stock_qty"], errors="coerce"
+)
+
+# Validate product prices
+if products["price_ghs"].isna().any() or (products["price_ghs"] < 0).any():
+    st.error("Product prices must be valid, non-negative numbers.")
+    st.stop()
+
+# Validate stock quantities
+if (
+    products["stock_qty"].isna().any()
+    or (products["stock_qty"] < 0).any()
+    or (products["stock_qty"] % 1 != 0).any()
+):
+    st.error("Stock quantities must be non-negative whole numbers.")
+    st.stop()
+
 
 # Create the search box and category filter
 st.subheader("Our Product Catalogue")
