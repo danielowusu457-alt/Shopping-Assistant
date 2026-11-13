@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 from pathlib import Path
 import os
+from catalogue_utils import validate_catalogue
 
 from dotenv import load_dotenv
 from google import genai
@@ -45,26 +46,12 @@ except pd.errors.ParserError:
     st.stop()
 
 # Check that all required columns exist
-required_columns = [
-    "product_id",
-    "name",
-    "category",
-    "description",
-    "price_ghs",
-    "stock_qty"
-]
+try:
+    products = validate_catalogue(products)
 
-missing_columns = [
-    column for column in required_columns
-    if column not in products.columns
-]
-
-if missing_columns:
-    st.error(
-        f"Missing required catalogue columns: {', '.join(missing_columns)}"
-    )
+except ValueError as error:
+    st.error(str(error))
     st.stop()
-
 # Check that the catalogue is not empty
 if products.empty:
     st.error("The product catalogue is empty.")
