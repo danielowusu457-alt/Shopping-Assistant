@@ -52,11 +52,13 @@ Customers can generate and download an order enquiry containing selected product
 Shopping-Assistant/
 │
 ├── src/
-│   └── main.py
+│   ├── main.py
+│   └── catalogue_utils.py
 │
 ├── data/
 │   └── retail_sample_catalogue.csv
 │
+├── test_catalogue_utils.py
 ├── test_gemini.py
 ├── requirements.txt
 ├── .gitignore
@@ -115,11 +117,37 @@ Replace `your_actual_api_key` with your own API key.
 
 ### Step 7: Run the application
 
+
 ```bash
 streamlit run src/main.py
 ```
 
+
 Streamlit will open the application in your web browser.
+
+### Running the Automated Tests
+
+The project includes automated tests to check whether the product catalogue validation works correctly.
+
+To run the tests:
+
+1. Activate your virtual environment.
+2. Open the Git Bash terminal in the project folder.
+3. Run the following command:
+
+```bash
+python -m unittest test_catalogue_utils -v
+```
+
+The tests check:
+- Valid product catalogue.
+- Missing required columns.
+- Invalid product prices.
+- Negative prices.
+- Invalid stock quantities.
+- Empty product catalogue.
+
+All six tests should pass if the validation function is working correctly.
 
 ## 7. Testing
 
