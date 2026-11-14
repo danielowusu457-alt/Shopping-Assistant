@@ -15,11 +15,123 @@ def reset_app():
 # Load the secret API key
 load_dotenv()
 
-# Set up the application
-st.set_page_config(page_title="Shopping Assistant")
 
-st.title("My Shopping Assistant")
-st.write("Welcome! Browse and search our available products.")
+# Set up the application
+st.set_page_config(
+    page_title="Smart Shopping Assistant",
+    page_icon="🛍️",
+    layout="wide"
+)
+
+
+
+# Custom CSS styling
+st.markdown("""
+<style>
+
+/* Overall background */
+.stApp {
+    background: linear-gradient(135deg, #EEF5FF, #F8F0FF, #FFF7ED);
+}
+
+/* Main content */
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* Main headings */
+h1 {
+    color: #173B75 !important;
+    font-weight: 850 !important;
+}
+
+h2, h3 {
+    color: #2455A4 !important;
+    font-weight: 750 !important;
+}
+
+/* Buttons */
+.stButton > button {
+    background: linear-gradient(90deg, #FF6B35, #FF9F1C);
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    padding: 0.65rem 1.3rem;
+    font-weight: 750;
+    box-shadow: 0 4px 12px rgba(255,107,53,0.25);
+    transition: 0.3s ease;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(90deg, #E84A20, #F58220);
+    transform: translateY(-2px);
+}
+
+/* Input fields */
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input {
+    border: 2px solid #B8D4F5;
+    border-radius: 10px;
+    background-color: white;
+}
+
+/* Select boxes */
+.stSelectbox div[data-baseweb="select"] {
+    border-radius: 10px;
+}
+
+/* Metrics */
+div[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #FFFFFF, #E5F3FF);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #B8D4F5;
+    box-shadow: 0 4px 12px rgba(30,80,150,0.08);
+}
+
+/* Data tables */
+div[data-testid="stDataFrame"] {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #B8D4F5;
+    padding: 5px;
+}
+
+/* Success messages */
+div[data-testid="stAlert"] {
+    border-radius: 12px;
+}
+
+/* Dividers */
+hr {
+    border-color: #B8D4F5;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# Welcome banner
+st.markdown("""
+<div style="
+    background: linear-gradient(120deg, #174C72, #087F8C);
+    padding: 35px;
+    border-radius: 18px;
+    color: white;
+    margin-bottom: 25px;
+">
+    <h1 style="color: white !important; margin-bottom: 8px;">
+        🛍️ Smart Shopping Assistant
+    </h1>
+    <p style="font-size: 18px; color: white;">
+        Discover great products, compare prices and shop smarter.
+    </p>
+    <p style="color: #D8F3F0;">
+        Your personal AI-powered shopping companion.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # Locate the product catalogue
 catalogue_path = (
