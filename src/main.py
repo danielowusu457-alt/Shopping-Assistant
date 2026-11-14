@@ -26,6 +26,7 @@ st.set_page_config(
 
 
 # Custom CSS styling
+
 st.markdown("""
 <style>
 
@@ -40,7 +41,7 @@ st.markdown("""
     padding-bottom: 3rem;
 }
 
-/* Main headings */
+/* Headings */
 h1 {
     color: #173B75 !important;
     font-weight: 850 !important;
@@ -49,6 +50,55 @@ h1 {
 h2, h3 {
     color: #2455A4 !important;
     font-weight: 750 !important;
+}
+
+/* General text visibility */
+.stApp p,
+.stApp label,
+.stApp span,
+.stApp [data-testid="stMarkdownContainer"] {
+    color: #173B75;
+}
+
+/* Text input fields */
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input {
+    background-color: #FFFFFF !important;
+    color: #173B75 !important;
+    border: 2px solid #7BADE5 !important;
+    border-radius: 10px !important;
+    caret-color: #173B75 !important;
+}
+
+/* Placeholder text */
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder {
+    color: #718096 !important;
+    opacity: 1;
+}
+
+/* Dropdowns */
+.stSelectbox div[data-baseweb="select"],
+.stMultiSelect div[data-baseweb="select"] {
+    background-color: #FFFFFF !important;
+    border: 2px solid #7BADE5 !important;
+    border-radius: 10px !important;
+}
+
+.stSelectbox div[data-baseweb="select"] *,
+.stMultiSelect div[data-baseweb="select"] * {
+    color: #173B75 !important;
+}
+
+/* Dropdown option menu */
+div[data-baseweb="popover"],
+div[data-baseweb="menu"] {
+    background-color: #FFFFFF !important;
+}
+
+div[role="option"] {
+    color: #173B75 !important;
 }
 
 /* Buttons */
@@ -68,20 +118,6 @@ h2, h3 {
     transform: translateY(-2px);
 }
 
-/* Input fields */
-.stTextInput input,
-.stTextArea textarea,
-.stNumberInput input {
-    border: 2px solid #B8D4F5;
-    border-radius: 10px;
-    background-color: white;
-}
-
-/* Select boxes */
-.stSelectbox div[data-baseweb="select"] {
-    border-radius: 10px;
-}
-
 /* Metrics */
 div[data-testid="stMetric"] {
     background: linear-gradient(135deg, #FFFFFF, #E5F3FF);
@@ -89,6 +125,10 @@ div[data-testid="stMetric"] {
     border-radius: 15px;
     border: 1px solid #B8D4F5;
     box-shadow: 0 4px 12px rgba(30,80,150,0.08);
+}
+
+div[data-testid="stMetric"] * {
+    color: #173B75 !important;
 }
 
 /* Data tables */
@@ -99,7 +139,7 @@ div[data-testid="stDataFrame"] {
     padding: 5px;
 }
 
-/* Success messages */
+/* Success and information messages */
 div[data-testid="stAlert"] {
     border-radius: 12px;
 }
